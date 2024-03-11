@@ -1,5 +1,147 @@
 # @effect/experimental
 
+## 0.10.1
+
+### Patch Changes
+
+- [#2274](https://github.com/Effect-TS/effect/pull/2274) [`8b552a2`](https://github.com/Effect-TS/effect/commit/8b552a28a3843c5057af342b8bc1534ed804a23d) Thanks [@tim-smart](https://github.com/tim-smart)! - improve Persistence error messages
+
+- Updated dependencies [[`0680545`](https://github.com/Effect-TS/effect/commit/068054540f19bb23a79c7c021ed8b2fe34f3e19f), [`20e63fb`](https://github.com/Effect-TS/effect/commit/20e63fb9207210f3fe2d136ec40d0a2dbff3225e), [`20e63fb`](https://github.com/Effect-TS/effect/commit/20e63fb9207210f3fe2d136ec40d0a2dbff3225e)]:
+  - @effect/platform-node@0.45.1
+  - @effect/platform@0.47.1
+  - effect@2.4.3
+  - @effect/schema@0.63.4
+
+## 0.10.0
+
+### Minor Changes
+
+- [#2261](https://github.com/Effect-TS/effect/pull/2261) [`fa9663c`](https://github.com/Effect-TS/effect/commit/fa9663cb854ca03dba672d7857ecff84f1140c9e) Thanks [@tim-smart](https://github.com/tim-smart)! - move Socket module to platform
+
+### Patch Changes
+
+- [#2246](https://github.com/Effect-TS/effect/pull/2246) [`5234a9a`](https://github.com/Effect-TS/effect/commit/5234a9aa26f4f1732f423dc89c32ac679d065543) Thanks [@tim-smart](https://github.com/tim-smart)! - add support for SpanEvent's to DevTools protocol
+
+- [#2254](https://github.com/Effect-TS/effect/pull/2254) [`98b921a`](https://github.com/Effect-TS/effect/commit/98b921a1cf1c099db02e21b19f11e8ec02b908b5) Thanks [@tim-smart](https://github.com/tim-smart)! - send a final metrics snapshot on DevTools shutdown
+
+- [#2256](https://github.com/Effect-TS/effect/pull/2256) [`f82875f`](https://github.com/Effect-TS/effect/commit/f82875f4e2baca2ddacf5e4fc7efcc9c1ee14f16) Thanks [@tim-smart](https://github.com/tim-smart)! - add Machine module to experimental
+
+  The Machine module can be used to create effectful state machines. Here is an
+  example of a machine that sends emails:
+
+  ```ts
+  import { Machine } from "@effect/experimental";
+  import { runMain } from "@effect/platform-node/NodeRuntime";
+  import { Data, Effect, List, Request, Schedule } from "effect";
+
+  class SendError extends Data.TaggedError("SendError")<{
+    readonly email: string;
+    readonly reason: string;
+  }> {}
+
+  class SendEmail extends Request.TaggedClass("SendEmail")<
+    void,
+    SendError,
+    {
+      readonly email: string;
+      readonly message: string;
+    }
+  > {}
+
+  class ProcessEmail extends Request.TaggedClass("ProcessEmail")<
+    void,
+    never,
+    {}
+  > {}
+
+  class Shutdown extends Request.TaggedClass("Shutdown")<void, never, {}> {}
+
+  const mailer = Machine.makeWith<List.List<SendEmail>>()((_, previous) =>
+    Effect.gen(function* (_) {
+      const ctx = yield* _(Machine.MachineContext);
+      const state = previous ?? List.empty();
+
+      if (List.isCons(state)) {
+        yield* _(
+          ctx.unsafeSend(new ProcessEmail()),
+          Effect.replicateEffect(List.size(state)),
+        );
+      }
+
+      return Machine.procedures.make(state).pipe(
+        Machine.procedures.addPrivate<ProcessEmail>()(
+          "ProcessEmail",
+          ({ state }) =>
+            Effect.gen(function* (_) {
+              if (List.isNil(state)) {
+                return [void 0, state];
+              }
+              const req = state.head;
+              yield* _(
+                Effect.log(`Sending email to ${req.email}`),
+                Effect.delay(500),
+              );
+              return [void 0, state.tail];
+            }),
+        ),
+        Machine.procedures.add<SendEmail>()("SendEmail", (ctx) =>
+          ctx
+            .send(new ProcessEmail())
+            .pipe(Effect.as([void 0, List.append(ctx.state, ctx.request)])),
+        ),
+        Machine.procedures.add<Shutdown>()("Shutdown", () =>
+          Effect.log("Shutting down").pipe(Effect.zipRight(Effect.interrupt)),
+        ),
+      );
+    }),
+  ).pipe(Machine.retry(Schedule.forever));
+
+  Effect.gen(function* (_) {
+    const actor = yield* _(Machine.boot(mailer));
+    yield* _(
+      actor.send(
+        new SendEmail({ email: "test@example.com", message: "Hello, World!" }),
+      ),
+    );
+    yield* _(
+      actor.send(
+        new SendEmail({ email: "test@example.com", message: "Hello, World!" }),
+      ),
+    );
+    yield* _(
+      actor.send(
+        new SendEmail({ email: "test@example.com", message: "Hello, World!" }),
+      ),
+    );
+    yield* _(actor.send(new Shutdown()));
+  }).pipe(Effect.scoped, runMain);
+  ```
+
+- Updated dependencies [[`e03811e`](https://github.com/Effect-TS/effect/commit/e03811e80c93e986e6348b3b67ac2ed6d5fefff0), [`ac41d84`](https://github.com/Effect-TS/effect/commit/ac41d84776484cdce8165b7ca2c9c9b6377eee2d), [`0f3d99c`](https://github.com/Effect-TS/effect/commit/0f3d99c27521ec6b221b644a0fffc79199c3acca), [`6137533`](https://github.com/Effect-TS/effect/commit/613753300c7705518ab1fea2f370b032851c2750), [`f373529`](https://github.com/Effect-TS/effect/commit/f373529999f4b8bc92b634f6ea14f19271388eed), [`1bf9f31`](https://github.com/Effect-TS/effect/commit/1bf9f31f07667de677673f7c29a4e7a26ebad3c8), [`e3ff789`](https://github.com/Effect-TS/effect/commit/e3ff789226f89e71eb28ca38ce79f90af6a03f1a), [`6137533`](https://github.com/Effect-TS/effect/commit/613753300c7705518ab1fea2f370b032851c2750), [`507ba40`](https://github.com/Effect-TS/effect/commit/507ba4060ff043c1a8d541dae723fa6940633b00), [`4064ea0`](https://github.com/Effect-TS/effect/commit/4064ea04e0b3fa23108ee471cd89ab2482b2f6e5), [`e466afe`](https://github.com/Effect-TS/effect/commit/e466afe32f2de598ceafd8982bd0cfbd388e5671), [`465be79`](https://github.com/Effect-TS/effect/commit/465be7926afe98169837d8a4ed5ebc059a732d21), [`f373529`](https://github.com/Effect-TS/effect/commit/f373529999f4b8bc92b634f6ea14f19271388eed), [`de74eb8`](https://github.com/Effect-TS/effect/commit/de74eb80a79eebde5ff645033765e7a617e92f27), [`d8e6940`](https://github.com/Effect-TS/effect/commit/d8e694040f67da6fefc0f5c98fc8e15c0b48822e), [`fa9663c`](https://github.com/Effect-TS/effect/commit/fa9663cb854ca03dba672d7857ecff84f1140c9e), [`fa9663c`](https://github.com/Effect-TS/effect/commit/fa9663cb854ca03dba672d7857ecff84f1140c9e)]:
+  - effect@2.4.2
+  - @effect/platform@0.47.0
+  - @effect/schema@0.63.3
+  - @effect/platform-node@0.45.0
+
+## 0.9.20
+
+### Patch Changes
+
+- Updated dependencies [[`a4a0006`](https://github.com/Effect-TS/effect/commit/a4a0006c7f19fc261df5cda16963d73457e4d6ac), [`7535080`](https://github.com/Effect-TS/effect/commit/7535080f2e2f9859711031161600c01807cc43ea), [`39f583e`](https://github.com/Effect-TS/effect/commit/39f583eaeb29eecd6eaec3b113b24d9d413153df), [`f428198`](https://github.com/Effect-TS/effect/commit/f428198725d4b9e304ecd5ff8bad8f92d871dbe3), [`0a37676`](https://github.com/Effect-TS/effect/commit/0a37676aa0eb2a21e17af2e6df9f81f52bbc8831), [`bd1d7ac`](https://github.com/Effect-TS/effect/commit/bd1d7ac75eea57a94d5e2d8e1edccb3136e84899), [`c035972`](https://github.com/Effect-TS/effect/commit/c035972dfabdd3cb3372b5ab468aa2fd0d808f4d), [`6f503b7`](https://github.com/Effect-TS/effect/commit/6f503b774d893bf2af34f66202e270d8c45d5f31)]:
+  - effect@2.4.1
+  - @effect/platform@0.46.3
+  - @effect/schema@0.63.2
+  - @effect/platform-node@0.44.11
+
+## 0.9.19
+
+### Patch Changes
+
+- Updated dependencies [[`5d30853`](https://github.com/Effect-TS/effect/commit/5d308534cac6f187227185393c0bac9eb27f90ab), [`6e350ed`](https://github.com/Effect-TS/effect/commit/6e350ed611feb0341e00aafd3c3905cd5ba53f07)]:
+  - @effect/schema@0.63.1
+  - @effect/platform@0.46.2
+  - @effect/platform-node@0.44.10
+
 ## 0.9.18
 
 ### Patch Changes

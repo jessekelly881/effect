@@ -1,6 +1,6 @@
 {
   "name": "@effect/schema",
-  "version": "0.63.0",
+  "version": "0.63.4",
   "type": "module",
   "license": "MIT",
   "description": "Modeling the schema of data structures as first-class values",
@@ -41,7 +41,8 @@
     "dtslint": "dtslint dtslint",
     "check": "tsc -b tsconfig.json",
     "test": "vitest",
-    "coverage": "vitest --coverage"
+    "coverage": "vitest --coverage",
+    "circular": "madge --extensions ts --circular --no-color --no-spinner src"
   },
   "peerDependencies": {
     "effect": "workspace:^",

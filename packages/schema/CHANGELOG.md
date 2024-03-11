@@ -1,5 +1,79 @@
 # @effect/schema
 
+## 0.63.4
+
+### Patch Changes
+
+- Updated dependencies [[`20e63fb`](https://github.com/Effect-TS/effect/commit/20e63fb9207210f3fe2d136ec40d0a2dbff3225e), [`20e63fb`](https://github.com/Effect-TS/effect/commit/20e63fb9207210f3fe2d136ec40d0a2dbff3225e)]:
+  - effect@2.4.3
+
+## 0.63.3
+
+### Patch Changes
+
+- [#2234](https://github.com/Effect-TS/effect/pull/2234) [`465be79`](https://github.com/Effect-TS/effect/commit/465be7926afe98169837d8a4ed5ebc059a732d21) Thanks [@gcanti](https://github.com/gcanti)! - add `BatchingAnnotation`, default value: `false`
+
+  Example:
+
+  ```ts
+  const schema = S.struct({
+    a: S.string,
+    b: S.number,
+  }).pipe(S.batching(true /* boolean | "inherit" | undefined */));
+  ```
+
+- [#2241](https://github.com/Effect-TS/effect/pull/2241) [`d8e6940`](https://github.com/Effect-TS/effect/commit/d8e694040f67da6fefc0f5c98fc8e15c0b48822e) Thanks [@jessekelly881](https://github.com/jessekelly881)! - add `sortedSet` and `sortedSetFromSeld` combinators
+
+- Updated dependencies [[`e03811e`](https://github.com/Effect-TS/effect/commit/e03811e80c93e986e6348b3b67ac2ed6d5fefff0), [`ac41d84`](https://github.com/Effect-TS/effect/commit/ac41d84776484cdce8165b7ca2c9c9b6377eee2d), [`6137533`](https://github.com/Effect-TS/effect/commit/613753300c7705518ab1fea2f370b032851c2750), [`f373529`](https://github.com/Effect-TS/effect/commit/f373529999f4b8bc92b634f6ea14f19271388eed), [`1bf9f31`](https://github.com/Effect-TS/effect/commit/1bf9f31f07667de677673f7c29a4e7a26ebad3c8), [`e3ff789`](https://github.com/Effect-TS/effect/commit/e3ff789226f89e71eb28ca38ce79f90af6a03f1a), [`6137533`](https://github.com/Effect-TS/effect/commit/613753300c7705518ab1fea2f370b032851c2750), [`507ba40`](https://github.com/Effect-TS/effect/commit/507ba4060ff043c1a8d541dae723fa6940633b00), [`e466afe`](https://github.com/Effect-TS/effect/commit/e466afe32f2de598ceafd8982bd0cfbd388e5671), [`f373529`](https://github.com/Effect-TS/effect/commit/f373529999f4b8bc92b634f6ea14f19271388eed), [`de74eb8`](https://github.com/Effect-TS/effect/commit/de74eb80a79eebde5ff645033765e7a617e92f27)]:
+  - effect@2.4.2
+
+## 0.63.2
+
+### Patch Changes
+
+- [#2222](https://github.com/Effect-TS/effect/pull/2222) [`39f583e`](https://github.com/Effect-TS/effect/commit/39f583eaeb29eecd6eaec3b113b24d9d413153df) Thanks [@gcanti](https://github.com/gcanti)! - TaggedClass: ensure constructor parameters don't overwrite the tag
+
+- [#2227](https://github.com/Effect-TS/effect/pull/2227) [`f428198`](https://github.com/Effect-TS/effect/commit/f428198725d4b9e304ecd5ff8bad8f92d871dbe3) Thanks [@gcanti](https://github.com/gcanti)! - add `ConcurrencyAnnotation`, default value: `undefined` (sequential)
+
+  Example:
+
+  ```ts
+  const schema = S.struct({
+    a: S.string,
+    b: S.number,
+  }).pipe(S.concurrency(1 /* number | "unbounded" | "inherit" | undefined */));
+  ```
+
+- [#2221](https://github.com/Effect-TS/effect/pull/2221) [`c035972`](https://github.com/Effect-TS/effect/commit/c035972dfabdd3cb3372b5ab468aa2fd0d808f4d) Thanks [@tim-smart](https://github.com/tim-smart)! - ensure Schema.Class is compatible without strictNullCheck
+
+- Updated dependencies [[`a4a0006`](https://github.com/Effect-TS/effect/commit/a4a0006c7f19fc261df5cda16963d73457e4d6ac), [`0a37676`](https://github.com/Effect-TS/effect/commit/0a37676aa0eb2a21e17af2e6df9f81f52bbc8831), [`6f503b7`](https://github.com/Effect-TS/effect/commit/6f503b774d893bf2af34f66202e270d8c45d5f31)]:
+  - effect@2.4.1
+
+## 0.63.1
+
+### Patch Changes
+
+- [#2209](https://github.com/Effect-TS/effect/pull/2209) [`5d30853`](https://github.com/Effect-TS/effect/commit/5d308534cac6f187227185393c0bac9eb27f90ab) Thanks [@steffanek](https://github.com/steffanek)! - Add `pickLiteral` to Schema so that we can pick values from a Schema literal as follows:
+
+  ```ts
+  import * as S from "@effect/schema/Schema";
+
+  const schema = S.literal("a", "b", "c").pipe(S.pickLiteral("a", "b")); // same as S.literal("a", "b")
+
+  S.decodeUnknownSync(schema)("a"); // ok
+  S.decodeUnknownSync(schema)("b"); // ok
+  S.decodeUnknownSync(schema)("c");
+  /*
+  Error: "a" | "b"
+  ├─ Union member
+  │  └─ Expected "a", actual "c"
+  └─ Union member
+     └─ Expected "b", actual "c"
+  */
+  ```
+
+- [#2217](https://github.com/Effect-TS/effect/pull/2217) [`6e350ed`](https://github.com/Effect-TS/effect/commit/6e350ed611feb0341e00aafd3c3905cd5ba53f07) Thanks [@gcanti](https://github.com/gcanti)! - JSONSchema: prune `UndefinedKeyword` if the property signature is marked as optional and contains a union that includes `UndefinedKeyword`, closes #2068
+
 ## 0.63.0
 
 ### Minor Changes
