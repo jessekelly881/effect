@@ -1,5 +1,25 @@
 # @effect/cluster
 
+## 0.0.23
+
+### Patch Changes
+
+- Updated dependencies [[`7f8900a`](https://github.com/Effect-TS/effect/commit/7f8900a1de9addeb0d371103a2c5c2aa3e4ff95e)]:
+  - @effect/platform@0.58.18
+  - @effect/platform-node@0.53.17
+  - @effect/rpc@0.31.18
+
+## 0.0.22
+
+### Patch Changes
+
+- Updated dependencies [[`5c0ceb0`](https://github.com/Effect-TS/effect/commit/5c0ceb00826cce9e50bf9d41d83e191d5352c030), [`5c0ceb0`](https://github.com/Effect-TS/effect/commit/5c0ceb00826cce9e50bf9d41d83e191d5352c030), [`34faeb6`](https://github.com/Effect-TS/effect/commit/34faeb6305ba52af4d6f8bdd2e633bb6a5a7a35b), [`33735b1`](https://github.com/Effect-TS/effect/commit/33735b16b41bd26929d8f4754c190925db6323b7), [`5c0ceb0`](https://github.com/Effect-TS/effect/commit/5c0ceb00826cce9e50bf9d41d83e191d5352c030), [`139d4b3`](https://github.com/Effect-TS/effect/commit/139d4b39fb3bff2eeaa7c0c809c581da42425a83)]:
+  - effect@3.4.6
+  - @effect/schema@0.68.15
+  - @effect/platform@0.58.17
+  - @effect/platform-node@0.53.16
+  - @effect/rpc@0.31.17
+
 ## 0.0.21
 
 ### Patch Changes
