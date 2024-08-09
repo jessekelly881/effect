@@ -2,4 +2,4 @@
 "@effect/platform": patch
 ---
 
-Add `HttpClient.layerTest`.
+add Cookies.get/getValue apis
