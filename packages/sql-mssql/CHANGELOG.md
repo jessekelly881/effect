@@ -1,5 +1,23 @@
 # @effect/sql-mssql
 
+## 0.16.1
+
+### Patch Changes
+
+- Updated dependencies [[`b75ac5d`](https://github.com/Effect-TS/effect/commit/b75ac5d0909115507bedc90f18f2d34deb217769)]:
+  - @effect/platform@0.68.1
+  - @effect/sql@0.16.1
+
+## 0.16.0
+
+### Patch Changes
+
+- [#3720](https://github.com/Effect-TS/effect/pull/3720) [`e0a5dad`](https://github.com/Effect-TS/effect/commit/e0a5dadd786c1ec9cbfdd80e9a53f1cacb7ee2ed) Thanks @jkonowitch! - add SqlClient.makeWithTransaction api
+
+- Updated dependencies [[`90ceeab`](https://github.com/Effect-TS/effect/commit/90ceeab3a04051b740af18c8af8bd73ee8ec6363), [`90ceeab`](https://github.com/Effect-TS/effect/commit/90ceeab3a04051b740af18c8af8bd73ee8ec6363), [`90ceeab`](https://github.com/Effect-TS/effect/commit/90ceeab3a04051b740af18c8af8bd73ee8ec6363)]:
+  - @effect/platform@0.68.0
+  - @effect/sql@0.16.0
+
 ## 0.15.2
 
 ### Patch Changes

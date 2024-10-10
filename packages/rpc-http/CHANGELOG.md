@@ -1,5 +1,28 @@
 # @effect/rpc-http
 
+## 0.41.0
+
+### Minor Changes
+
+- [#3747](https://github.com/Effect-TS/effect/pull/3747) [`09e8636`](https://github.com/Effect-TS/effect/commit/09e863648fa6ead9894b8b5104f8c11f6cc6120f) Thanks @patroza! - make RpcRouter conversion apis dual
+
+### Patch Changes
+
+- [#3747](https://github.com/Effect-TS/effect/pull/3747) [`09e8636`](https://github.com/Effect-TS/effect/commit/09e863648fa6ead9894b8b5104f8c11f6cc6120f) Thanks @patroza! - feat: add support for spanPrefix to HttpRpcRouter
+
+- Updated dependencies [[`b75ac5d`](https://github.com/Effect-TS/effect/commit/b75ac5d0909115507bedc90f18f2d34deb217769), [`09e8636`](https://github.com/Effect-TS/effect/commit/09e863648fa6ead9894b8b5104f8c11f6cc6120f)]:
+  - @effect/platform@0.68.1
+  - @effect/rpc@0.43.0
+
+## 0.40.0
+
+### Patch Changes
+
+- Updated dependencies [[`f02b354`](https://github.com/Effect-TS/effect/commit/f02b354ab5b0451143b82bb73dc866be29adec85), [`90ceeab`](https://github.com/Effect-TS/effect/commit/90ceeab3a04051b740af18c8af8bd73ee8ec6363), [`90ceeab`](https://github.com/Effect-TS/effect/commit/90ceeab3a04051b740af18c8af8bd73ee8ec6363), [`90ceeab`](https://github.com/Effect-TS/effect/commit/90ceeab3a04051b740af18c8af8bd73ee8ec6363)]:
+  - @effect/schema@0.75.2
+  - @effect/platform@0.68.0
+  - @effect/rpc@0.42.0
+
 ## 0.39.1
 
 ### Patch Changes
