@@ -41,17 +41,17 @@ export const makeHandler: {
   <R, E>(
     httpApp: App.Default<E, R>
   ): Effect.Effect<
-    (nodeRequest: Http.IncomingMessage, nodeResponse: Http.ServerResponse<Http.IncomingMessage>) => void,
+    (nodeRequest: Http.IncomingMessage, nodeResponse: Http.ServerResponse) => void,
     never,
-    Exclude<R, Scope.Scope | ServerRequest.HttpServerRequest>
+    Exclude<R, ServerRequest.HttpServerRequest | Scope.Scope>
   >
   <R, E, App extends App.Default<any, any>>(
     httpApp: App.Default<E, R>,
     middleware: Middleware.HttpMiddleware.Applied<App, E, R>
   ): Effect.Effect<
-    (nodeRequest: Http.IncomingMessage, nodeResponse: Http.ServerResponse<Http.IncomingMessage>) => void,
+    (nodeRequest: Http.IncomingMessage, nodeResponse: Http.ServerResponse) => void,
     never,
-    Exclude<Effect.Effect.Context<App>, Scope.Scope | ServerRequest.HttpServerRequest>
+    Exclude<Effect.Effect.Context<App>, ServerRequest.HttpServerRequest | Scope.Scope>
   >
 } = internal.makeHandler
 
@@ -91,13 +91,13 @@ export const layerConfig: (
  * with prepended url of the running http server.
  *
  * @example
- * import { HttpClientRequest, HttpRouter, HttpServer } from "@effect/platform"
+ * import { HttpClient, HttpRouter, HttpServer } from "@effect/platform"
  * import { NodeHttpServer } from "@effect/platform-node"
  * import { Effect } from "effect"
  *
  * Effect.gen(function*() {
  *   yield* HttpServer.serveEffect(HttpRouter.empty)
- *   const response = yield* HttpClientRequest.get("/")
+ *   const response = yield* HttpClient.get("/")
  *   assert.strictEqual(response.status, 404)
  * }).pipe(Effect.provide(NodeHttpServer.layerTest))
  *
@@ -105,7 +105,7 @@ export const layerConfig: (
  * @category layers
  */
 export const layerTest: Layer.Layer<
-  | HttpClient.HttpClient.Service
+  | HttpClient.HttpClient
   | Server.HttpServer
   | Platform.HttpPlatform
   | Etag.Generator

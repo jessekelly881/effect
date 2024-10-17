@@ -1,5 +1,68 @@
 # @effect/experimental
 
+## 0.29.6
+
+### Patch Changes
+
+- Updated dependencies [[`382556f`](https://github.com/Effect-TS/effect/commit/382556f8930780c0634de681077706113a8c8239), [`97cb014`](https://github.com/Effect-TS/effect/commit/97cb0145114b2cd2f378e98f6c4ff5bf2c1865f5)]:
+  - @effect/schema@0.75.5
+  - @effect/platform@0.68.6
+  - @effect/platform-node@0.63.6
+
+## 0.29.5
+
+### Patch Changes
+
+- Updated dependencies [[`2036402`](https://github.com/Effect-TS/effect/commit/20364020b8b75a684791aa93d90626758023e9e9)]:
+  - @effect/platform@0.68.5
+  - @effect/platform-node@0.63.5
+
+## 0.29.4
+
+### Patch Changes
+
+- Updated dependencies [[`1b1ef29`](https://github.com/Effect-TS/effect/commit/1b1ef29ae302322f69dc938f9337aa97b4c63266)]:
+  - @effect/platform@0.68.4
+  - @effect/platform-node@0.63.4
+
+## 0.29.3
+
+### Patch Changes
+
+- Updated dependencies [[`61a99b2`](https://github.com/Effect-TS/effect/commit/61a99b2bf9d757870ef0c2ec9d4c877cdd364a3d), [`8c33087`](https://github.com/Effect-TS/effect/commit/8c330879425e80bed2f65e407cd59e991f0d7bec), [`3bcdfb3`](https://github.com/Effect-TS/effect/commit/3bcdfb3b6453959f449b075130e2db941653f722)]:
+  - effect@3.9.2
+  - @effect/platform-node@0.63.3
+  - @effect/platform@0.68.3
+  - @effect/schema@0.75.4
+
+## 0.29.2
+
+### Patch Changes
+
+- [#3631](https://github.com/Effect-TS/effect/pull/3631) [`bd160a4`](https://github.com/Effect-TS/effect/commit/bd160a4f714b0f1cb5867e458fd70f9131b060d6) Thanks @tim-smart! - add Sse module to experimental, for parsing server-side-events
+
+- Updated dependencies [[`360ec14`](https://github.com/Effect-TS/effect/commit/360ec14dd4102c526aef7433a8881ad4d9beab75)]:
+  - @effect/schema@0.75.3
+  - @effect/platform@0.68.2
+  - @effect/platform-node@0.63.2
+
+## 0.29.1
+
+### Patch Changes
+
+- Updated dependencies [[`b75ac5d`](https://github.com/Effect-TS/effect/commit/b75ac5d0909115507bedc90f18f2d34deb217769)]:
+  - @effect/platform@0.68.1
+  - @effect/platform-node@0.63.1
+
+## 0.29.0
+
+### Patch Changes
+
+- Updated dependencies [[`f02b354`](https://github.com/Effect-TS/effect/commit/f02b354ab5b0451143b82bb73dc866be29adec85), [`90ceeab`](https://github.com/Effect-TS/effect/commit/90ceeab3a04051b740af18c8af8bd73ee8ec6363), [`90ceeab`](https://github.com/Effect-TS/effect/commit/90ceeab3a04051b740af18c8af8bd73ee8ec6363), [`90ceeab`](https://github.com/Effect-TS/effect/commit/90ceeab3a04051b740af18c8af8bd73ee8ec6363)]:
+  - @effect/schema@0.75.2
+  - @effect/platform-node@0.63.0
+  - @effect/platform@0.68.0
+
 ## 0.28.1
 
 ### Patch Changes

@@ -1,5 +1,94 @@
 # @effect/platform-browser
 
+## 0.47.6
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @effect/platform@0.68.6
+
+## 0.47.5
+
+### Patch Changes
+
+- Updated dependencies [[`2036402`](https://github.com/Effect-TS/effect/commit/20364020b8b75a684791aa93d90626758023e9e9)]:
+  - @effect/platform@0.68.5
+
+## 0.47.4
+
+### Patch Changes
+
+- Updated dependencies [[`1b1ef29`](https://github.com/Effect-TS/effect/commit/1b1ef29ae302322f69dc938f9337aa97b4c63266)]:
+  - @effect/platform@0.68.4
+
+## 0.47.3
+
+### Patch Changes
+
+- Updated dependencies [[`61a99b2`](https://github.com/Effect-TS/effect/commit/61a99b2bf9d757870ef0c2ec9d4c877cdd364a3d), [`8c33087`](https://github.com/Effect-TS/effect/commit/8c330879425e80bed2f65e407cd59e991f0d7bec)]:
+  - effect@3.9.2
+  - @effect/platform@0.68.3
+
+## 0.47.2
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @effect/platform@0.68.2
+
+## 0.47.1
+
+### Patch Changes
+
+- Updated dependencies [[`b75ac5d`](https://github.com/Effect-TS/effect/commit/b75ac5d0909115507bedc90f18f2d34deb217769)]:
+  - @effect/platform@0.68.1
+
+## 0.47.0
+
+### Minor Changes
+
+- [#3756](https://github.com/Effect-TS/effect/pull/3756) [`90ceeab`](https://github.com/Effect-TS/effect/commit/90ceeab3a04051b740af18c8af8bd73ee8ec6363) Thanks @tim-smart! - remove HttpClient.Service type
+
+- [#3756](https://github.com/Effect-TS/effect/pull/3756) [`90ceeab`](https://github.com/Effect-TS/effect/commit/90ceeab3a04051b740af18c8af8bd73ee8ec6363) Thanks @tim-smart! - constrain HttpClient success type to HttpClientResponse
+
+- [#3756](https://github.com/Effect-TS/effect/pull/3756) [`90ceeab`](https://github.com/Effect-TS/effect/commit/90ceeab3a04051b740af18c8af8bd73ee8ec6363) Thanks @tim-smart! - add HttpClient accessor apis
+
+  These apis allow you to easily send requests without first accessing the `HttpClient` service.
+
+  Below is an example of using the `get` accessor api to send a GET request:
+
+  ```ts
+  import { FetchHttpClient, HttpClient } from "@effect/platform"
+  import { Effect } from "effect"
+
+  const program = HttpClient.get(
+    "https://jsonplaceholder.typicode.com/posts/1"
+  ).pipe(
+    Effect.andThen((response) => response.json),
+    Effect.scoped,
+    Effect.provide(FetchHttpClient.layer)
+  )
+
+  Effect.runPromise(program)
+  /*
+  Output:
+  {
+    userId: 1,
+    id: 1,
+    title: 'sunt aut facere repellat provident occaecati excepturi optio reprehenderit',
+    body: 'quia et suscipit\n' +
+      'suscipit recusandae consequuntur expedita et cum\n' +
+      'reprehenderit molestiae ut ut quas totam\n' +
+      'nostrum rerum est autem sunt rem eveniet architecto'
+  }
+  */
+  ```
+
+### Patch Changes
+
+- Updated dependencies [[`90ceeab`](https://github.com/Effect-TS/effect/commit/90ceeab3a04051b740af18c8af8bd73ee8ec6363), [`90ceeab`](https://github.com/Effect-TS/effect/commit/90ceeab3a04051b740af18c8af8bd73ee8ec6363), [`90ceeab`](https://github.com/Effect-TS/effect/commit/90ceeab3a04051b740af18c8af8bd73ee8ec6363)]:
+  - @effect/platform@0.68.0
+
 ## 0.46.1
 
 ### Patch Changes

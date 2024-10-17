@@ -1,5 +1,102 @@
 # @effect/schema
 
+## 0.75.5
+
+### Patch Changes
+
+- [#3792](https://github.com/Effect-TS/effect/pull/3792) [`382556f`](https://github.com/Effect-TS/effect/commit/382556f8930780c0634de681077706113a8c8239) Thanks @gcanti! - resolve parse error when using `pick` with union of class schemas, closes #3751
+
+- [#3790](https://github.com/Effect-TS/effect/pull/3790) [`97cb014`](https://github.com/Effect-TS/effect/commit/97cb0145114b2cd2f378e98f6c4ff5bf2c1865f5) Thanks @gcanti! - Equivalence: Fixed a bug related to discriminated tuples.
+
+  Example:
+
+  The following equivalence check was incorrectly returning `false`:
+
+  ```ts
+  import * as E from "@effect/schema/Equivalence"
+  import * as S from "@effect/schema/Schema"
+
+  // Union of discriminated tuples
+  const schema = S.Union(
+    S.Tuple(S.Literal("a"), S.String),
+    S.Tuple(S.Literal("b"), S.Number)
+  )
+
+  const equivalence = E.make(schema)
+
+  console.log(equivalence(["a", "x"], ["a", "x"]))
+  // false
+  ```
+
+## 0.75.4
+
+### Patch Changes
+
+- Updated dependencies [[`61a99b2`](https://github.com/Effect-TS/effect/commit/61a99b2bf9d757870ef0c2ec9d4c877cdd364a3d)]:
+  - effect@3.9.2
+
+## 0.75.3
+
+### Patch Changes
+
+- [#3761](https://github.com/Effect-TS/effect/pull/3761) [`360ec14`](https://github.com/Effect-TS/effect/commit/360ec14dd4102c526aef7433a8881ad4d9beab75) Thanks @gcanti! - Allow Schema.Either to support Schema.Never without type errors, closes #3755.
+
+  - Updated the type parameters of `format` to extend `Schema.All` instead of `Schema<A, I, R>`.
+  - Updated the type parameters of `Schema.EitherFromSelf` to extend `Schema.All` instead of `Schema.Any`.
+  - Updated the type parameters of `Schema.Either` to extend `Schema.All` instead of `Schema.Any`.
+  - Updated the type parameters of `Schema.EitherFromUnion` to extend `Schema.All` instead of `Schema.Any`.
+
+## 0.75.2
+
+### Patch Changes
+
+- [#3753](https://github.com/Effect-TS/effect/pull/3753) [`f02b354`](https://github.com/Effect-TS/effect/commit/f02b354ab5b0451143b82bb73dc866be29adec85) Thanks @gcanti! - Enhanced Error Reporting for Discriminated Union Tuple Schemas, closes #3752
+
+  Previously, irrelevant error messages were generated for each member of the union. Now, when a discriminator is present in the input, only the relevant member will trigger an error.
+
+  Before
+
+  ```ts
+  import * as Schema from "@effect/schema/Schema"
+
+  const schema = Schema.Union(
+    Schema.Tuple(Schema.Literal("a"), Schema.String),
+    Schema.Tuple(Schema.Literal("b"), Schema.Number)
+  ).annotations({ identifier: "MyUnion" })
+
+  console.log(Schema.decodeUnknownSync(schema)(["a", 0]))
+  /*
+  throws:
+  ParseError: MyUnion
+  ├─ readonly ["a", string]
+  │  └─ [1]
+  │     └─ Expected string, actual 0
+  └─ readonly ["b", number]
+     └─ [0]
+        └─ Expected "b", actual "a"
+  */
+  ```
+
+  After
+
+  ```ts
+  import * as Schema from "@effect/schema/Schema"
+
+  const schema = Schema.Union(
+    Schema.Tuple(Schema.Literal("a"), Schema.String),
+    Schema.Tuple(Schema.Literal("b"), Schema.Number)
+  ).annotations({ identifier: "MyUnion" })
+
+  console.log(Schema.decodeUnknownSync(schema)(["a", 0]))
+  /*
+  throws:
+  ParseError: MyUnion
+  └─ readonly ["a", string]
+     └─ [1]
+        └─ Expected string, actual 0
+  */
+  ```
+
 ## 0.75.1
 
 ### Patch Changes
