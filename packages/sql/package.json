@@ -1,6 +1,6 @@
 {
   "name": "@effect/sql",
-  "version": "0.15.1",
+  "version": "0.18.7",
   "type": "module",
   "license": "MIT",
   "description": "A SQL toolkit for Effect",
@@ -46,13 +46,11 @@
   "devDependencies": {
     "@effect/experimental": "workspace:^",
     "@effect/platform": "workspace:^",
-    "@effect/schema": "workspace:^",
     "effect": "workspace:^"
   },
   "peerDependencies": {
     "@effect/experimental": "workspace:^",
     "@effect/platform": "workspace:^",
-    "@effect/schema": "workspace:^",
     "effect": "workspace:^"
   },
   "effect": {

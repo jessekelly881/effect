@@ -1,5 +1,135 @@
 # @effect/sql-sqlite-node
 
+## 0.18.7
+
+### Patch Changes
+
+- Updated dependencies [[`714e119`](https://github.com/Effect-TS/effect/commit/714e11945e45e5a2554ee058e6c43f82a8e309cf), [`c1afd55`](https://github.com/Effect-TS/effect/commit/c1afd55c54e61f9c432823d21b3d016f79160a37), [`42cd72a`](https://github.com/Effect-TS/effect/commit/42cd72a44ca9593e4d81fbb50e8111625fd0fb81)]:
+  - effect@3.10.2
+  - @effect/platform@0.69.6
+  - @effect/sql@0.18.7
+
+## 0.18.6
+
+### Patch Changes
+
+- Updated dependencies [[`9604d6b`](https://github.com/Effect-TS/effect/commit/9604d6b616435103dafea8b53637a9d1450b4750)]:
+  - effect@3.10.1
+  - @effect/sql@0.18.6
+  - @effect/platform@0.69.5
+
+## 0.18.5
+
+### Patch Changes
+
+- Updated dependencies [[`c86b1d7`](https://github.com/Effect-TS/effect/commit/c86b1d7cd47b66df190ef9775a475467c1abdbd6)]:
+  - @effect/platform@0.69.4
+  - @effect/sql@0.18.5
+
+## 0.18.4
+
+### Patch Changes
+
+- Updated dependencies [[`d5fba63`](https://github.com/Effect-TS/effect/commit/d5fba6391e1005e374aa0238f13edfbd65848313), [`1eb2c30`](https://github.com/Effect-TS/effect/commit/1eb2c30ba064398db5790e376dedcfad55b7b005), [`02d413e`](https://github.com/Effect-TS/effect/commit/02d413e7b6bc1c64885969c37cc3e4e690c94d7d)]:
+  - @effect/platform@0.69.3
+  - @effect/sql@0.18.4
+
+## 0.18.3
+
+### Patch Changes
+
+- Updated dependencies [[`e7afc47`](https://github.com/Effect-TS/effect/commit/e7afc47ce83e381c3f4aed2b2974e3b3d86a2340)]:
+  - @effect/platform@0.69.2
+  - @effect/sql@0.18.3
+
+## 0.18.2
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @effect/sql@0.18.2
+
+## 0.18.1
+
+### Patch Changes
+
+- Updated dependencies [[`7564f56`](https://github.com/Effect-TS/effect/commit/7564f56bb2844cf39d2b0d2d9e93cf9b2205e9a8), [`7564f56`](https://github.com/Effect-TS/effect/commit/7564f56bb2844cf39d2b0d2d9e93cf9b2205e9a8)]:
+  - @effect/platform@0.69.1
+  - @effect/sql@0.18.1
+
+## 0.18.0
+
+### Patch Changes
+
+- Updated dependencies [[`4a01828`](https://github.com/Effect-TS/effect/commit/4a01828b66d6213e9bbe18979c893b13f7bb29bf), [`6d9de6b`](https://github.com/Effect-TS/effect/commit/6d9de6b871c5c08e6509a4e830c3d74758faa198), [`4a01828`](https://github.com/Effect-TS/effect/commit/4a01828b66d6213e9bbe18979c893b13f7bb29bf), [`c79c4c1`](https://github.com/Effect-TS/effect/commit/c79c4c178390fe61ff6dda88c9e058862349343a), [`38d30f0`](https://github.com/Effect-TS/effect/commit/38d30f08b8da62f9c3e308b9250738cb8d17bdb5), [`5821ce3`](https://github.com/Effect-TS/effect/commit/5821ce3455b47d25e0a40cae6ce22af9db5fa556)]:
+  - effect@3.10.0
+  - @effect/platform@0.69.0
+  - @effect/sql@0.18.0
+
+## 0.17.0
+
+### Patch Changes
+
+- Updated dependencies [[`dacbf7d`](https://github.com/Effect-TS/effect/commit/dacbf7db59899065aee4e5dd95a6459880e09ceb)]:
+  - @effect/sql@0.17.0
+
+## 0.16.6
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @effect/platform@0.68.6
+  - @effect/sql@0.16.6
+
+## 0.16.5
+
+### Patch Changes
+
+- Updated dependencies [[`2036402`](https://github.com/Effect-TS/effect/commit/20364020b8b75a684791aa93d90626758023e9e9)]:
+  - @effect/platform@0.68.5
+  - @effect/sql@0.16.5
+
+## 0.16.4
+
+### Patch Changes
+
+- Updated dependencies [[`1b1ef29`](https://github.com/Effect-TS/effect/commit/1b1ef29ae302322f69dc938f9337aa97b4c63266)]:
+  - @effect/platform@0.68.4
+  - @effect/sql@0.16.4
+
+## 0.16.3
+
+### Patch Changes
+
+- Updated dependencies [[`61a99b2`](https://github.com/Effect-TS/effect/commit/61a99b2bf9d757870ef0c2ec9d4c877cdd364a3d), [`8c33087`](https://github.com/Effect-TS/effect/commit/8c330879425e80bed2f65e407cd59e991f0d7bec)]:
+  - effect@3.9.2
+  - @effect/platform@0.68.3
+  - @effect/sql@0.16.3
+
+## 0.16.2
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @effect/sql@0.16.2
+  - @effect/platform@0.68.2
+
+## 0.16.1
+
+### Patch Changes
+
+- Updated dependencies [[`b75ac5d`](https://github.com/Effect-TS/effect/commit/b75ac5d0909115507bedc90f18f2d34deb217769)]:
+  - @effect/platform@0.68.1
+  - @effect/sql@0.16.1
+
+## 0.16.0
+
+### Patch Changes
+
+- Updated dependencies [[`90ceeab`](https://github.com/Effect-TS/effect/commit/90ceeab3a04051b740af18c8af8bd73ee8ec6363), [`90ceeab`](https://github.com/Effect-TS/effect/commit/90ceeab3a04051b740af18c8af8bd73ee8ec6363), [`90ceeab`](https://github.com/Effect-TS/effect/commit/90ceeab3a04051b740af18c8af8bd73ee8ec6363)]:
+  - @effect/platform@0.68.0
+  - @effect/sql@0.16.0
+
 ## 0.15.1
 
 ### Patch Changes

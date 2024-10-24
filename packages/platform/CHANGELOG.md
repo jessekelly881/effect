@@ -1,5 +1,184 @@
 # @effect/platform
 
+## 0.69.6
+
+### Patch Changes
+
+- [#3826](https://github.com/Effect-TS/effect/pull/3826) [`42cd72a`](https://github.com/Effect-TS/effect/commit/42cd72a44ca9593e4d81fbb50e8111625fd0fb81) Thanks @juliusmarminge! - ensure requests & responses have headers redacted when inspecting
+
+- Updated dependencies [[`714e119`](https://github.com/Effect-TS/effect/commit/714e11945e45e5a2554ee058e6c43f82a8e309cf), [`c1afd55`](https://github.com/Effect-TS/effect/commit/c1afd55c54e61f9c432823d21b3d016f79160a37)]:
+  - effect@3.10.2
+
+## 0.69.5
+
+### Patch Changes
+
+- Updated dependencies [[`9604d6b`](https://github.com/Effect-TS/effect/commit/9604d6b616435103dafea8b53637a9d1450b4750)]:
+  - effect@3.10.1
+
+## 0.69.4
+
+### Patch Changes
+
+- [#3816](https://github.com/Effect-TS/effect/pull/3816) [`c86b1d7`](https://github.com/Effect-TS/effect/commit/c86b1d7cd47b66df190ef9775a475467c1abdbd6) Thanks @tim-smart! - allow Request.signal to be missing in .toWebHandler apis
+
+## 0.69.3
+
+### Patch Changes
+
+- [#3814](https://github.com/Effect-TS/effect/pull/3814) [`d5fba63`](https://github.com/Effect-TS/effect/commit/d5fba6391e1005e374aa0238f13edfbd65848313) Thanks @tim-smart! - cache OpenApi schema generation
+
+- [#3813](https://github.com/Effect-TS/effect/pull/3813) [`1eb2c30`](https://github.com/Effect-TS/effect/commit/1eb2c30ba064398db5790e376dedcfad55b7b005) Thanks @KhraksMamtsov! - Add support for bearer format OpenApi annotation
+
+- [#3811](https://github.com/Effect-TS/effect/pull/3811) [`02d413e`](https://github.com/Effect-TS/effect/commit/02d413e7b6bc1c64885969c37cc3e4e690c94d7d) Thanks @KhraksMamtsov! - A bug related to the format of the security schema keys has been fixed. According to the OpenAPI specification, it must match the regular expression` ^[a-zA-Z0-9.-_]+# @effect/platform
+
+## 0.69.2
+
+### Patch Changes
+
+- [#3808](https://github.com/Effect-TS/effect/pull/3808) [`e7afc47`](https://github.com/Effect-TS/effect/commit/e7afc47ce83e381c3f4aed2b2974e3b3d86a2340) Thanks @tim-smart! - ensure HttpMiddleware is only initialized once
+
+## 0.69.1
+
+### Patch Changes
+
+- [#3802](https://github.com/Effect-TS/effect/pull/3802) [`7564f56`](https://github.com/Effect-TS/effect/commit/7564f56bb2844cf39d2b0d2d9e93cf9b2205e9a8) Thanks @tim-smart! - simplify HttpApiMiddleware.TagClass type
+
+- [#3802](https://github.com/Effect-TS/effect/pull/3802) [`7564f56`](https://github.com/Effect-TS/effect/commit/7564f56bb2844cf39d2b0d2d9e93cf9b2205e9a8) Thanks @tim-smart! - add HttpServer.layerContext to platform-node/bun
+
+## 0.69.0
+
+### Minor Changes
+
+- [#3764](https://github.com/Effect-TS/effect/pull/3764) [`6d9de6b`](https://github.com/Effect-TS/effect/commit/6d9de6b871c5c08e6509a4e830c3d74758faa198) Thanks @tim-smart! - HttpApi second revision
+
+  - `HttpApi`, `HttpApiGroup` & `HttpApiEndpoint` now use a chainable api instead
+    of a pipeable api.
+  - `HttpApiMiddleware` module has been added, with a updated way of defining
+    security middleware.
+  - You can now add multiple success schemas
+  - A url search parameter schema has been added
+  - Error schemas now support `HttpApiSchema` encoding apis
+  - `toWebHandler` has been simplified
+
+  For more information, see the [README](https://github.com/Effect-TS/effect/blob/main/packages/platform/README.md#http-api).
+
+- [#3764](https://github.com/Effect-TS/effect/pull/3764) [`5821ce3`](https://github.com/Effect-TS/effect/commit/5821ce3455b47d25e0a40cae6ce22af9db5fa556) Thanks @patroza! - feat: implement Redactable. Used by Headers to not log sensitive information
+
+### Patch Changes
+
+- Updated dependencies [[`4a01828`](https://github.com/Effect-TS/effect/commit/4a01828b66d6213e9bbe18979c893b13f7bb29bf), [`4a01828`](https://github.com/Effect-TS/effect/commit/4a01828b66d6213e9bbe18979c893b13f7bb29bf), [`c79c4c1`](https://github.com/Effect-TS/effect/commit/c79c4c178390fe61ff6dda88c9e058862349343a), [`38d30f0`](https://github.com/Effect-TS/effect/commit/38d30f08b8da62f9c3e308b9250738cb8d17bdb5), [`5821ce3`](https://github.com/Effect-TS/effect/commit/5821ce3455b47d25e0a40cae6ce22af9db5fa556)]:
+  - effect@3.10.0
+
+## 0.68.6
+
+### Patch Changes
+
+- Updated dependencies [[`382556f`](https://github.com/Effect-TS/effect/commit/382556f8930780c0634de681077706113a8c8239), [`97cb014`](https://github.com/Effect-TS/effect/commit/97cb0145114b2cd2f378e98f6c4ff5bf2c1865f5)]:
+  - @effect/schema@0.75.5
+
+## 0.68.5
+
+### Patch Changes
+
+- [#3784](https://github.com/Effect-TS/effect/pull/3784) [`2036402`](https://github.com/Effect-TS/effect/commit/20364020b8b75a684791aa93d90626758023e9e9) Thanks @patroza! - fix HttpMiddleware circular import
+
+## 0.68.4
+
+### Patch Changes
+
+- [#3780](https://github.com/Effect-TS/effect/pull/3780) [`1b1ef29`](https://github.com/Effect-TS/effect/commit/1b1ef29ae302322f69dc938f9337aa97b4c63266) Thanks @tim-smart! - ensure cors middleware also affects error responses
+
+## 0.68.3
+
+### Patch Changes
+
+- [#3769](https://github.com/Effect-TS/effect/pull/3769) [`8c33087`](https://github.com/Effect-TS/effect/commit/8c330879425e80bed2f65e407cd59e991f0d7bec) Thanks @tim-smart! - add support for WebSocket protocols option
+
+- Updated dependencies [[`61a99b2`](https://github.com/Effect-TS/effect/commit/61a99b2bf9d757870ef0c2ec9d4c877cdd364a3d)]:
+  - effect@3.9.2
+  - @effect/schema@0.75.4
+
+## 0.68.2
+
+### Patch Changes
+
+- Updated dependencies [[`360ec14`](https://github.com/Effect-TS/effect/commit/360ec14dd4102c526aef7433a8881ad4d9beab75)]:
+  - @effect/schema@0.75.3
+
+## 0.68.1
+
+### Patch Changes
+
+- [#3743](https://github.com/Effect-TS/effect/pull/3743) [`b75ac5d`](https://github.com/Effect-TS/effect/commit/b75ac5d0909115507bedc90f18f2d34deb217769) Thanks @sukovanej! - Add support for `ConfigProvider` based on .env files.
+
+  ```ts
+  import { PlatformConfigProvider } from "@effect/platform"
+  import { NodeContext } from "@effect/platform-node"
+  import { Config } from "effect"
+
+  Effect.gen(function* () {
+    const config = yield* Config.all({
+      api_url: Config.string("API_URL"),
+      api_key: Config.string("API_KEY")
+    })
+
+    console.log(`Api config: ${config}`)
+  }).pipe(
+    Effect.provide(
+      PlatformConfigProvider.layerDotEnvAdd(".env").pipe(
+        Layer.provide(NodeContext.layer)
+      )
+    )
+  )
+  ```
+
+## 0.68.0
+
+### Minor Changes
+
+- [#3756](https://github.com/Effect-TS/effect/pull/3756) [`90ceeab`](https://github.com/Effect-TS/effect/commit/90ceeab3a04051b740af18c8af8bd73ee8ec6363) Thanks @tim-smart! - remove HttpClient.Service type
+
+- [#3756](https://github.com/Effect-TS/effect/pull/3756) [`90ceeab`](https://github.com/Effect-TS/effect/commit/90ceeab3a04051b740af18c8af8bd73ee8ec6363) Thanks @tim-smart! - constrain HttpClient success type to HttpClientResponse
+
+- [#3756](https://github.com/Effect-TS/effect/pull/3756) [`90ceeab`](https://github.com/Effect-TS/effect/commit/90ceeab3a04051b740af18c8af8bd73ee8ec6363) Thanks @tim-smart! - add HttpClient accessor apis
+
+  These apis allow you to easily send requests without first accessing the `HttpClient` service.
+
+  Below is an example of using the `get` accessor api to send a GET request:
+
+  ```ts
+  import { FetchHttpClient, HttpClient } from "@effect/platform"
+  import { Effect } from "effect"
+
+  const program = HttpClient.get(
+    "https://jsonplaceholder.typicode.com/posts/1"
+  ).pipe(
+    Effect.andThen((response) => response.json),
+    Effect.scoped,
+    Effect.provide(FetchHttpClient.layer)
+  )
+
+  Effect.runPromise(program)
+  /*
+  Output:
+  {
+    userId: 1,
+    id: 1,
+    title: 'sunt aut facere repellat provident occaecati excepturi optio reprehenderit',
+    body: 'quia et suscipit\n' +
+      'suscipit recusandae consequuntur expedita et cum\n' +
+      'reprehenderit molestiae ut ut quas totam\n' +
+      'nostrum rerum est autem sunt rem eveniet architecto'
+  }
+  */
+  ```
+
+### Patch Changes
+
+- Updated dependencies [[`f02b354`](https://github.com/Effect-TS/effect/commit/f02b354ab5b0451143b82bb73dc866be29adec85)]:
+  - @effect/schema@0.75.2
+
 ## 0.67.1
 
 ### Patch Changes

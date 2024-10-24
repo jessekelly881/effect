@@ -1,11 +1,11 @@
-import type { ParseOptions } from "@effect/schema/AST"
-import type * as Schema from "@effect/schema/Schema"
 import * as Context from "effect/Context"
 import * as Effect from "effect/Effect"
 import * as Effectable from "effect/Effectable"
 import { dual } from "effect/Function"
 import * as Inspectable from "effect/Inspectable"
 import * as Runtime from "effect/Runtime"
+import type * as Schema from "effect/Schema"
+import type { ParseOptions } from "effect/SchemaAST"
 import * as Stream from "effect/Stream"
 import * as Cookies from "../Cookies.js"
 import type * as PlatformError from "../Error.js"
@@ -75,7 +75,7 @@ class ServerResponseImpl extends Effectable.StructuralClass<ServerResponse.HttpS
       _id: "@effect/platform/HttpServerResponse",
       status: this.status,
       statusText: this.statusText,
-      headers: this.headers,
+      headers: Inspectable.redact(this.headers),
       cookies: this.cookies.toJSON(),
       body: this.body.toJSON()
     }

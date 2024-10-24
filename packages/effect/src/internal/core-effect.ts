@@ -85,7 +85,7 @@ export const try_: {
     readonly try: LazyArg<A>
     readonly catch: (error: unknown) => E
   }): Effect.Effect<A, E>
-  <A>(evaluate: LazyArg<A>): Effect.Effect<A, Cause.UnknownException>
+  <A>(thunk: LazyArg<A>): Effect.Effect<A, Cause.UnknownException>
 } = <A, E>(
   arg: LazyArg<A> | {
     readonly try: LazyArg<A>
@@ -375,14 +375,14 @@ export const Do: Effect.Effect<{}> = core.succeed({})
 export const bind: {
   <N extends string, A extends object, B, E2, R2>(
     name: Exclude<N, keyof A>,
-    f: (a: A) => Effect.Effect<B, E2, R2>
+    f: (a: NoInfer<A>) => Effect.Effect<B, E2, R2>
   ): <E1, R1>(
     self: Effect.Effect<A, E1, R1>
   ) => Effect.Effect<{ [K in N | keyof A]: K extends keyof A ? A[K] : B }, E2 | E1, R2 | R1>
   <A extends object, N extends string, E1, R1, B, E2, R2>(
     self: Effect.Effect<A, E1, R1>,
     name: Exclude<N, keyof A>,
-    f: (a: A) => Effect.Effect<B, E2, R2>
+    f: (a: NoInfer<A>) => Effect.Effect<B, E2, R2>
   ): Effect.Effect<{ [K in N | keyof A]: K extends keyof A ? A[K] : B }, E1 | E2, R1 | R2>
 } = doNotation.bind<Effect.EffectTypeLambda>(core.map, core.flatMap)
 
@@ -396,14 +396,14 @@ export const bindTo: {
 export const let_: {
   <N extends string, A extends object, B>(
     name: Exclude<N, keyof A>,
-    f: (a: A) => B
+    f: (a: NoInfer<A>) => B
   ): <E, R>(
     self: Effect.Effect<A, E, R>
   ) => Effect.Effect<{ [K in N | keyof A]: K extends keyof A ? A[K] : B }, E, R>
   <A extends object, N extends string, E, R, B>(
     self: Effect.Effect<A, E, R>,
     name: Exclude<N, keyof A>,
-    f: (a: A) => B
+    f: (a: NoInfer<A>) => B
   ): Effect.Effect<{ [K in N | keyof A]: K extends keyof A ? A[K] : B }, E, R>
 } = doNotation.let_<Effect.EffectTypeLambda>(core.map)
 
@@ -1656,7 +1656,7 @@ export const tryPromise: {
       readonly catch: (error: unknown) => E
     }
   ): Effect.Effect<A, E>
-  <A>(try_: (signal: AbortSignal) => PromiseLike<A>): Effect.Effect<A, Cause.UnknownException>
+  <A>(evaluate: (signal: AbortSignal) => PromiseLike<A>): Effect.Effect<A, Cause.UnknownException>
 } = <A, E>(
   arg: ((signal: AbortSignal) => PromiseLike<A>) | {
     readonly try: (signal: AbortSignal) => PromiseLike<A>

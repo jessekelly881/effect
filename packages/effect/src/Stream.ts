@@ -29,6 +29,8 @@ import type * as Sink from "./Sink.js"
 import type * as Emit from "./StreamEmit.js"
 import type * as HaltStrategy from "./StreamHaltStrategy.js"
 import type * as Take from "./Take.js"
+import type { TPubSub } from "./TPubSub.js"
+import type { TDequeue } from "./TQueue.js"
 import type * as Tracer from "./Tracer.js"
 import type { Covariant, NoInfer, TupleOf } from "./Types.js"
 import type * as Unify from "./Unify.js"
@@ -2014,6 +2016,14 @@ export const fromPubSub: {
 } = internal.fromPubSub
 
 /**
+ * Creates a stream from a subscription to a `TPubSub`.
+ *
+ * @since 3.10.0
+ * @category constructors
+ */
+export const fromTPubSub: <A>(pubsub: TPubSub<A>) => Stream<A> = internal.fromTPubSub
+
+/**
  * Creates a new `Stream` from an iterable collection of values.
  *
  * @example
@@ -2095,6 +2105,14 @@ export const fromQueue: <A>(
 ) => Stream<A> = internal.fromQueue
 
 /**
+ * Creates a stream from a TQueue of values
+ *
+ * @since 3.10.0
+ * @category constructors
+ */
+export const fromTQueue: <A>(queue: TDequeue<A>) => Stream<A> = internal.fromTQueue
+
+/**
  * Creates a stream from a `ReadableStream`.
  *
  * See https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream.
@@ -2102,10 +2120,16 @@ export const fromQueue: <A>(
  * @since 2.0.0
  * @category constructors
  */
-export const fromReadableStream: <A, E>(
-  evaluate: LazyArg<ReadableStream<A>>,
-  onError: (error: unknown) => E
-) => Stream<A, E> = internal.fromReadableStream
+export const fromReadableStream: {
+  <A, E>(
+    options: {
+      readonly evaluate: LazyArg<ReadableStream<A>>
+      readonly onError: (error: unknown) => E
+      readonly releaseLockOnEnd?: boolean | undefined
+    }
+  ): Stream<A, E>
+  <A, E>(evaluate: LazyArg<ReadableStream<A>>, onError: (error: unknown) => E): Stream<A, E>
+} = internal.fromReadableStream
 
 /**
  * Creates a stream from a `ReadableStreamBYOBReader`.
@@ -2116,11 +2140,21 @@ export const fromReadableStream: <A, E>(
  * @since 2.0.0
  * @category constructors
  */
-export const fromReadableStreamByob: <E>(
-  evaluate: LazyArg<ReadableStream<Uint8Array>>,
-  onError: (error: unknown) => E,
-  allocSize?: number
-) => Stream<Uint8Array, E> = internal.fromReadableStreamByob
+export const fromReadableStreamByob: {
+  <E>(
+    options: {
+      readonly evaluate: LazyArg<ReadableStream<Uint8Array>>
+      readonly onError: (error: unknown) => E
+      readonly bufferSize?: number | undefined
+      readonly releaseLockOnEnd?: boolean | undefined
+    }
+  ): Stream<Uint8Array, E>
+  <E>(
+    evaluate: LazyArg<ReadableStream<Uint8Array>>,
+    onError: (error: unknown) => E,
+    allocSize?: number
+  ): Stream<Uint8Array, E>
+} = internal.fromReadableStreamByob
 
 /**
  * Creates a stream from a `Schedule` that does not require any further
@@ -5996,7 +6030,7 @@ export const Do: Stream<{}> = internal.Do
 export const bind: {
   <N extends string, A, B, E2, R2>(
     tag: Exclude<N, keyof A>,
-    f: (_: A) => Stream<B, E2, R2>,
+    f: (_: NoInfer<A>) => Stream<B, E2, R2>,
     options?:
       | { readonly concurrency?: number | "unbounded" | undefined; readonly bufferSize?: number | undefined }
       | undefined
@@ -6004,7 +6038,7 @@ export const bind: {
   <A, E, R, N extends string, B, E2, R2>(
     self: Stream<A, E, R>,
     tag: Exclude<N, keyof A>,
-    f: (_: A) => Stream<B, E2, R2>,
+    f: (_: NoInfer<A>) => Stream<B, E2, R2>,
     options?:
       | { readonly concurrency?: number | "unbounded" | undefined; readonly bufferSize?: number | undefined }
       | undefined
@@ -6025,19 +6059,15 @@ export const bind: {
 export const bindEffect: {
   <N extends string, A, B, E2, R2>(
     tag: Exclude<N, keyof A>,
-    f: (_: A) => Effect.Effect<B, E2, R2>,
-    options?:
-      | { readonly concurrency?: number | "unbounded" | undefined; readonly bufferSize?: number | undefined }
-      | undefined
-  ): <E, R>(self: Stream<A, E, R>) => Stream<{ [K in N | keyof A]: K extends keyof A ? A[K] : B }, E2 | E, R2 | R>
+    f: (_: NoInfer<A>) => Effect.Effect<B, E2, R2>,
+    options?: { readonly concurrency?: number | "unbounded" | undefined; readonly bufferSize?: number | undefined }
+  ): <E, R>(self: Stream<A, E, R>) => Stream<{ [K in keyof A | N]: K extends keyof A ? A[K] : B }, E | E2, R | R2>
   <A, E, R, N extends string, B, E2, R2>(
     self: Stream<A, E, R>,
     tag: Exclude<N, keyof A>,
-    f: (_: A) => Effect.Effect<B, E2, R2>,
-    options?:
-      | { readonly concurrency?: number | "unbounded" | undefined; readonly unordered?: boolean | undefined }
-      | undefined
-  ): Stream<{ [K in N | keyof A]: K extends keyof A ? A[K] : B }, E | E2, R | R2>
+    f: (_: NoInfer<A>) => Effect.Effect<B, E2, R2>,
+    options?: { readonly concurrency?: number | "unbounded" | undefined; readonly unordered?: boolean | undefined }
+  ): Stream<{ [K in keyof A | N]: K extends keyof A ? A[K] : B }, E | E2, R | R2>
 } = _groupBy.bindEffect
 
 /**
@@ -6077,12 +6107,12 @@ export const bindTo: {
 const let_: {
   <N extends string, A extends object, B>(
     name: Exclude<N, keyof A>,
-    f: (a: A) => B
+    f: (a: NoInfer<A>) => B
   ): <E, R>(self: Stream<A, E, R>) => Stream<{ [K in N | keyof A]: K extends keyof A ? A[K] : B }, E, R>
   <A extends object, E, R, N extends string, B>(
     self: Stream<A, E, R>,
     name: Exclude<N, keyof A>,
-    f: (a: A) => B
+    f: (a: NoInfer<A>) => B
   ): Stream<{ [K in N | keyof A]: K extends keyof A ? A[K] : B }, E, R>
 } = internal.let_
 

@@ -168,14 +168,19 @@ export const layerServer = (
 ) => Layer.scoped(Server.HttpServer, make(options))
 
 /** @internal */
+export const layerContext = Layer.mergeAll(
+  Platform.layer,
+  Etag.layerWeak,
+  BunContext.layer
+)
+
+/** @internal */
 export const layer = (
   options: Omit<ServeOptions, "fetch" | "error">
 ) =>
   Layer.mergeAll(
     Layer.scoped(Server.HttpServer, make(options)),
-    Platform.layer,
-    Etag.layerWeak,
-    BunContext.layer
+    layerContext
   )
 
 /** @internal */
@@ -192,9 +197,7 @@ export const layerConfig = (
 ) =>
   Layer.mergeAll(
     Layer.scoped(Server.HttpServer, Effect.flatMap(Config.unwrap(options), make)),
-    Platform.layer,
-    Etag.layerWeak,
-    BunContext.layer
+    layerContext
   )
 
 interface WebSocketContext {

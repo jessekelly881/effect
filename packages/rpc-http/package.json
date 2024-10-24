@@ -1,6 +1,6 @@
 {
   "name": "@effect/rpc-http",
-  "version": "0.39.1",
+  "version": "0.42.6",
   "type": "module",
   "license": "MIT",
   "description": "Functional programming in TypeScript",
@@ -44,12 +44,10 @@
   "devDependencies": {
     "@effect/platform": "workspace:^",
     "@effect/platform-node": "workspace:^",
-    "@effect/schema": "workspace:^",
     "effect": "workspace:^"
   },
   "peerDependencies": {
     "@effect/platform": "workspace:^",
-    "@effect/schema": "workspace:^",
     "effect": "workspace:^"
   }
 }

@@ -4,17 +4,17 @@
 import * as Context from "effect/Context"
 import * as Effect from "effect/Effect"
 import * as Exit from "effect/Exit"
-import * as FiberRef from "effect/FiberRef"
-import { dual } from "effect/Function"
-import { globalValue } from "effect/GlobalValue"
+import type * as FiberRef from "effect/FiberRef"
 import * as Layer from "effect/Layer"
-import * as Option from "effect/Option"
+import type * as Option from "effect/Option"
 import * as Runtime from "effect/Runtime"
 import * as Scope from "effect/Scope"
+import { unify } from "effect/Unify"
 import type { HttpMiddleware } from "./HttpMiddleware.js"
 import * as ServerError from "./HttpServerError.js"
 import * as ServerRequest from "./HttpServerRequest.js"
 import * as ServerResponse from "./HttpServerResponse.js"
+import * as internal from "./internal/httpApp.js"
 import * as internalMiddleware from "./internal/httpMiddleware.js"
 
 /**
@@ -33,6 +33,8 @@ export type HttpApp<A = ServerResponse.HttpServerResponse, E = never, R = never>
  */
 export type Default<E = never, R = never> = HttpApp<ServerResponse.HttpServerResponse, E, R>
 
+const handledSymbol = Symbol.for("@effect/platform/HttpApp/handled")
+
 /**
  * @since 1.0.0
  * @category combinators
@@ -46,53 +48,74 @@ export const toHandled = <E, R, _, EH, RH>(
   middleware?: HttpMiddleware | undefined
 ): Effect.Effect<void, never, Exclude<R | RH | ServerRequest.HttpServerRequest, Scope.Scope>> => {
   const responded = Effect.withFiberRuntime<
-    void,
-    never,
+    ServerResponse.HttpServerResponse,
+    E | EH | ServerError.ResponseError,
     R | RH | ServerRequest.HttpServerRequest
-  >((fiber) => {
-    let handled = false
-    const request = Context.unsafeGet(fiber.getFiberRef(FiberRef.currentContext), ServerRequest.HttpServerRequest)
-    const preprocessResponse = (response: ServerResponse.HttpServerResponse) => {
+  >((fiber) =>
+    Effect.flatMap(self, (response) => {
+      const request = Context.unsafeGet(fiber.currentContext, ServerRequest.HttpServerRequest)
       const handler = fiber.getFiberRef(currentPreResponseHandlers)
-      return handler._tag === "Some" ? handler.value(request, response) : Effect.succeed(response)
-    }
-    const responded = Effect.matchCauseEffect(self, {
-      onFailure: (cause) =>
-        Effect.flatMap(ServerError.causeResponse(cause), ([response, cause]) =>
-          preprocessResponse(response).pipe(
-            Effect.flatMap((response) => {
-              handled = true
+      if (handler._tag === "None") {
+        ;(request as any)[handledSymbol] = true
+        return Effect.as(handleResponse(request, response), response)
+      }
+      return Effect.tap(handler.value(request, response), (response) => {
+        ;(request as any)[handledSymbol] = true
+        return handleResponse(request, response)
+      })
+    })
+  )
+
+  const withErrorHandling = Effect.catchAllCause(
+    responded,
+    (cause) =>
+      Effect.withFiberRuntime<
+        ServerResponse.HttpServerResponse,
+        E | EH | ServerError.ResponseError,
+        ServerRequest.HttpServerRequest | RH
+      >((fiber) =>
+        Effect.flatMap(ServerError.causeResponse(cause), ([response, cause]) => {
+          const request = Context.unsafeGet(fiber.currentContext, ServerRequest.HttpServerRequest)
+          const handler = fiber.getFiberRef(currentPreResponseHandlers)
+          if (handler._tag === "None") {
+            ;(request as any)[handledSymbol] = true
+            return Effect.zipRight(handleResponse(request, response), Effect.failCause(cause))
+          }
+          return Effect.zipRight(
+            Effect.tap(handler.value(request, response), (response) => {
+              ;(request as any)[handledSymbol] = true
               return handleResponse(request, response)
             }),
-            Effect.zipRight(Effect.failCause(cause))
-          )),
-      onSuccess: (response) =>
-        Effect.tap(
-          preprocessResponse(response),
-          (response) => {
-            handled = true
-            return handleResponse(request, response)
-          }
-        )
-    })
-    const withTracer = internalMiddleware.tracer(responded)
-    if (middleware === undefined) {
-      return withTracer as any
-    }
-    return Effect.matchCauseEffect(middleware(withTracer), {
-      onFailure: (cause): Effect.Effect<void, EH, RH> => {
-        if (handled) {
-          return Effect.void
-        }
-        return Effect.matchCauseEffect(ServerError.causeResponse(cause), {
-          onFailure: (_cause) => handleResponse(request, ServerResponse.empty({ status: 500 })),
-          onSuccess: ([response]) => handleResponse(request, response)
+            Effect.failCause(cause)
+          )
         })
-      },
-      onSuccess: (response): Effect.Effect<void, EH, RH> => handled ? Effect.void : handleResponse(request, response)
-    })
-  })
-  return Effect.uninterruptible(Effect.scoped(responded))
+      )
+  )
+
+  const withMiddleware = unify(
+    middleware === undefined ?
+      internalMiddleware.tracer(withErrorHandling) :
+      Effect.matchCauseEffect(middleware(internalMiddleware.tracer(withErrorHandling)), {
+        onFailure: (cause): Effect.Effect<void, EH, RH> =>
+          Effect.withFiberRuntime((fiber) => {
+            const request = Context.unsafeGet(fiber.currentContext, ServerRequest.HttpServerRequest)
+            if (handledSymbol in request) {
+              return Effect.void
+            }
+            return Effect.matchCauseEffect(ServerError.causeResponse(cause), {
+              onFailure: (_cause) => handleResponse(request, ServerResponse.empty({ status: 500 })),
+              onSuccess: ([response]) => handleResponse(request, response)
+            })
+          }),
+        onSuccess: (response): Effect.Effect<void, EH, RH> =>
+          Effect.withFiberRuntime((fiber) => {
+            const request = Context.unsafeGet(fiber.currentContext, ServerRequest.HttpServerRequest)
+            return handledSymbol in request ? Effect.void : handleResponse(request, response)
+          })
+      })
+  )
+
+  return Effect.uninterruptible(Effect.scoped(withMiddleware)) as any
 }
 
 /**
@@ -108,48 +131,20 @@ export type PreResponseHandler = (
  * @since 1.0.0
  * @category fiber refs
  */
-export const currentPreResponseHandlers: FiberRef.FiberRef<Option.Option<PreResponseHandler>> = globalValue(
-  Symbol.for("@effect/platform/HttpApp/preResponseHandlers"),
-  () => FiberRef.unsafeMake<Option.Option<PreResponseHandler>>(Option.none())
-)
+export const currentPreResponseHandlers: FiberRef.FiberRef<Option.Option<PreResponseHandler>> =
+  internal.currentPreResponseHandlers
 
 /**
  * @since 1.0.0
  * @category fiber refs
  */
-export const appendPreResponseHandler: (handler: PreResponseHandler) => Effect.Effect<void> = (
-  handler: PreResponseHandler
-) =>
-  FiberRef.update(
-    currentPreResponseHandlers,
-    Option.match({
-      onNone: () => Option.some(handler),
-      onSome: (prev) =>
-        Option.some((request, response) =>
-          Effect.flatMap(prev(request, response), (response) => handler(request, response))
-        )
-    })
-  )
-
+export const appendPreResponseHandler: (handler: PreResponseHandler) => Effect.Effect<void> =
+  internal.appendPreResponseHandler
 /**
  * @since 1.0.0
  * @category fiber refs
  */
-export const withPreResponseHandler = dual<
-  (handler: PreResponseHandler) => <A, E, R>(self: HttpApp<A, E, R>) => HttpApp<A, E, R>,
-  <A, E, R>(self: HttpApp<A, E, R>, handler: PreResponseHandler) => HttpApp<A, E, R>
->(2, (self, handler) =>
-  Effect.locallyWith(
-    self,
-    currentPreResponseHandlers,
-    Option.match({
-      onNone: () => Option.some(handler),
-      onSome: (prev) =>
-        Option.some((request, response) =>
-          Effect.flatMap(prev(request, response), (response) => handler(request, response))
-        )
-    })
-  ))
+export const withPreResponseHandler = internal.withPreResponseHandler
 
 /**
  * @since 1.0.0
@@ -157,21 +152,24 @@ export const withPreResponseHandler = dual<
  */
 export const toWebHandlerRuntime = <R>(runtime: Runtime.Runtime<R>) => {
   const run = Runtime.runFork(runtime)
-  return <E>(self: Default<E, R | Scope.Scope>, middleware?: HttpMiddleware | undefined) =>
-  (request: Request): Promise<Response> =>
-    new Promise((resolve) => {
-      const fiber = run(Effect.provideService(
-        toHandled(self, (request, response) => {
-          resolve(ServerResponse.toWeb(response, { withoutBody: request.method === "HEAD", runtime }))
-          return Effect.void
-        }, middleware),
-        ServerRequest.HttpServerRequest,
-        ServerRequest.fromWeb(request)
-      ))
-      request.signal.addEventListener("abort", () => {
-        fiber.unsafeInterruptAsFork(ServerError.clientAbortFiberId)
-      }, { once: true })
-    })
+  return <E>(self: Default<E, R | Scope.Scope>, middleware?: HttpMiddleware | undefined) => {
+    const resolveSymbol = Symbol.for("@effect/platform/HttpApp/resolve")
+    const httpApp = toHandled(self, (request, response) => {
+      ;(request as any)[resolveSymbol](
+        ServerResponse.toWeb(response, { withoutBody: request.method === "HEAD", runtime })
+      )
+      return Effect.void
+    }, middleware)
+    return (request: Request): Promise<Response> =>
+      new Promise((resolve) => {
+        const httpServerRequest = ServerRequest.fromWeb(request)
+        ;(httpServerRequest as any)[resolveSymbol] = resolve
+        const fiber = run(Effect.provideService(httpApp, ServerRequest.HttpServerRequest, httpServerRequest))
+        request.signal?.addEventListener("abort", () => {
+          fiber.unsafeInterruptAsFork(ServerError.clientAbortFiberId)
+        }, { once: true })
+      })
+  }
 }
 
 /**

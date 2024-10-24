@@ -1,5 +1,121 @@
 # @effect/sql-drizzle
 
+## 0.16.7
+
+### Patch Changes
+
+- Updated dependencies [[`714e119`](https://github.com/Effect-TS/effect/commit/714e11945e45e5a2554ee058e6c43f82a8e309cf), [`c1afd55`](https://github.com/Effect-TS/effect/commit/c1afd55c54e61f9c432823d21b3d016f79160a37)]:
+  - effect@3.10.2
+  - @effect/sql@0.18.7
+
+## 0.16.6
+
+### Patch Changes
+
+- Updated dependencies [[`9604d6b`](https://github.com/Effect-TS/effect/commit/9604d6b616435103dafea8b53637a9d1450b4750)]:
+  - effect@3.10.1
+  - @effect/sql@0.18.6
+
+## 0.16.5
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @effect/sql@0.18.5
+
+## 0.16.4
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @effect/sql@0.18.4
+
+## 0.16.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @effect/sql@0.18.3
+
+## 0.16.2
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @effect/sql@0.18.2
+
+## 0.16.1
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @effect/sql@0.18.1
+
+## 0.16.0
+
+### Patch Changes
+
+- Updated dependencies [[`4a01828`](https://github.com/Effect-TS/effect/commit/4a01828b66d6213e9bbe18979c893b13f7bb29bf), [`4a01828`](https://github.com/Effect-TS/effect/commit/4a01828b66d6213e9bbe18979c893b13f7bb29bf), [`c79c4c1`](https://github.com/Effect-TS/effect/commit/c79c4c178390fe61ff6dda88c9e058862349343a), [`38d30f0`](https://github.com/Effect-TS/effect/commit/38d30f08b8da62f9c3e308b9250738cb8d17bdb5), [`5821ce3`](https://github.com/Effect-TS/effect/commit/5821ce3455b47d25e0a40cae6ce22af9db5fa556)]:
+  - effect@3.10.0
+  - @effect/sql@0.18.0
+
+## 0.15.0
+
+### Patch Changes
+
+- Updated dependencies [[`dacbf7d`](https://github.com/Effect-TS/effect/commit/dacbf7db59899065aee4e5dd95a6459880e09ceb)]:
+  - @effect/sql@0.17.0
+
+## 0.14.6
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @effect/sql@0.16.6
+
+## 0.14.5
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @effect/sql@0.16.5
+
+## 0.14.4
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @effect/sql@0.16.4
+
+## 0.14.3
+
+### Patch Changes
+
+- Updated dependencies [[`61a99b2`](https://github.com/Effect-TS/effect/commit/61a99b2bf9d757870ef0c2ec9d4c877cdd364a3d)]:
+  - effect@3.9.2
+  - @effect/sql@0.16.3
+
+## 0.14.2
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @effect/sql@0.16.2
+
+## 0.14.1
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @effect/sql@0.16.1
+
+## 0.14.0
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @effect/sql@0.16.0
+
 ## 0.13.1
 
 ### Patch Changes

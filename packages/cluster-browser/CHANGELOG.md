@@ -1,5 +1,111 @@
 # @effect/cluster
 
+## 0.12.6
+
+### Patch Changes
+
+- Updated dependencies [[`714e119`](https://github.com/Effect-TS/effect/commit/714e11945e45e5a2554ee058e6c43f82a8e309cf), [`c1afd55`](https://github.com/Effect-TS/effect/commit/c1afd55c54e61f9c432823d21b3d016f79160a37)]:
+  - effect@3.10.2
+  - @effect/rpc@0.44.6
+
+## 0.12.5
+
+### Patch Changes
+
+- Updated dependencies [[`9604d6b`](https://github.com/Effect-TS/effect/commit/9604d6b616435103dafea8b53637a9d1450b4750)]:
+  - effect@3.10.1
+  - @effect/rpc@0.44.5
+
+## 0.12.4
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @effect/rpc@0.44.4
+
+## 0.12.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @effect/rpc@0.44.3
+
+## 0.12.2
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @effect/rpc@0.44.2
+
+## 0.12.1
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @effect/rpc@0.44.1
+
+## 0.12.0
+
+### Patch Changes
+
+- Updated dependencies [[`4a01828`](https://github.com/Effect-TS/effect/commit/4a01828b66d6213e9bbe18979c893b13f7bb29bf), [`4a01828`](https://github.com/Effect-TS/effect/commit/4a01828b66d6213e9bbe18979c893b13f7bb29bf), [`c79c4c1`](https://github.com/Effect-TS/effect/commit/c79c4c178390fe61ff6dda88c9e058862349343a), [`38d30f0`](https://github.com/Effect-TS/effect/commit/38d30f08b8da62f9c3e308b9250738cb8d17bdb5), [`5821ce3`](https://github.com/Effect-TS/effect/commit/5821ce3455b47d25e0a40cae6ce22af9db5fa556)]:
+  - effect@3.10.0
+  - @effect/rpc@0.44.0
+
+## 0.11.5
+
+### Patch Changes
+
+- Updated dependencies [[`382556f`](https://github.com/Effect-TS/effect/commit/382556f8930780c0634de681077706113a8c8239), [`97cb014`](https://github.com/Effect-TS/effect/commit/97cb0145114b2cd2f378e98f6c4ff5bf2c1865f5)]:
+  - @effect/schema@0.75.5
+  - @effect/rpc@0.43.5
+
+## 0.11.4
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @effect/rpc@0.43.4
+
+## 0.11.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @effect/rpc@0.43.3
+
+## 0.11.2
+
+### Patch Changes
+
+- Updated dependencies [[`61a99b2`](https://github.com/Effect-TS/effect/commit/61a99b2bf9d757870ef0c2ec9d4c877cdd364a3d)]:
+  - effect@3.9.2
+  - @effect/rpc@0.43.2
+  - @effect/schema@0.75.4
+
+## 0.11.1
+
+### Patch Changes
+
+- Updated dependencies [[`360ec14`](https://github.com/Effect-TS/effect/commit/360ec14dd4102c526aef7433a8881ad4d9beab75)]:
+  - @effect/schema@0.75.3
+  - @effect/rpc@0.43.1
+
+## 0.11.0
+
+### Patch Changes
+
+- Updated dependencies [[`09e8636`](https://github.com/Effect-TS/effect/commit/09e863648fa6ead9894b8b5104f8c11f6cc6120f)]:
+  - @effect/rpc@0.43.0
+
+## 0.10.0
+
+### Patch Changes
+
+- Updated dependencies [[`f02b354`](https://github.com/Effect-TS/effect/commit/f02b354ab5b0451143b82bb73dc866be29adec85)]:
+  - @effect/schema@0.75.2
+  - @effect/rpc@0.42.0
+
 ## 0.9.1
 
 ### Patch Changes
