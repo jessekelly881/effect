@@ -1,5 +1,66 @@
 # @effect/platform-node
 
+## 0.75.2
+
+### Patch Changes
+
+- Updated dependencies [[`fad8cca`](https://github.com/Effect-TS/effect/commit/fad8cca9bbfcc2eaeb44b97c15dbe0a1eda75315), [`4296293`](https://github.com/Effect-TS/effect/commit/4296293049414d0cf2d915a26c552b09f946b9a0), [`9c241ab`](https://github.com/Effect-TS/effect/commit/9c241abe47ccf7a5257b98a4a64a63054a12741d), [`082b0c1`](https://github.com/Effect-TS/effect/commit/082b0c1b9f4252bcdd69608f2e4a9226f953ac3f), [`be12983`](https://github.com/Effect-TS/effect/commit/be12983bc7e7537b41cd8910fc4eb7d1da56ab07), [`de88127`](https://github.com/Effect-TS/effect/commit/de88127a5a5906ccece98af74787b5ae0e65e431)]:
+  - effect@3.13.11
+  - @effect/platform@0.79.2
+  - @effect/platform-node-shared@0.29.2
+
+## 0.75.1
+
+### Patch Changes
+
+- Updated dependencies [[`527c964`](https://github.com/Effect-TS/effect/commit/527c9645229f5be9714a7e60a38a9e753c4bbfb1)]:
+  - effect@3.13.10
+  - @effect/platform@0.79.1
+  - @effect/platform-node-shared@0.29.1
+
+## 0.75.0
+
+### Minor Changes
+
+- [#4573](https://github.com/Effect-TS/effect/pull/4573) [`88fe129`](https://github.com/Effect-TS/effect/commit/88fe12923740765c0335a6e6203fdcc6a463edca) Thanks @tim-smart! - remove Scope from HttpClient requirements
+
+  Before:
+
+  ```ts
+  import { HttpClient } from "@effect/platform"
+  import { Effect } from "effect"
+
+  Effect.gen(function* () {
+    const client = yield* HttpClient.HttpClient
+    const response = yield* client.get("https://api.github.com/users/octocat")
+    return yield* response.json
+  }).pipe(Effect.scoped)
+  ```
+
+  After:
+
+  ```ts
+  import { HttpClient } from "@effect/platform"
+  import { Effect } from "effect"
+
+  Effect.gen(function* () {
+    const client = yield* HttpClient.HttpClient
+    const response = yield* client.get("https://api.github.com/users/octocat")
+    return yield* response.json
+  }) // no need to add Effect.scoped
+  ```
+
+### Patch Changes
+
+- [#4580](https://github.com/Effect-TS/effect/pull/4580) [`bbdc279`](https://github.com/Effect-TS/effect/commit/bbdc2795a461cb2d1fe19b2669526a6ef590c3d4) Thanks @tim-smart! - prevent worker handler interrupts from shutting down runner
+
+- [#4583](https://github.com/Effect-TS/effect/pull/4583) [`d630249`](https://github.com/Effect-TS/effect/commit/d630249426113088abe8b382db4f14d80f2160c2) Thanks @tim-smart! - support Layer.launch when using WorkerRunner
+
+- Updated dependencies [[`88fe129`](https://github.com/Effect-TS/effect/commit/88fe12923740765c0335a6e6203fdcc6a463edca), [`d630249`](https://github.com/Effect-TS/effect/commit/d630249426113088abe8b382db4f14d80f2160c2), [`2976e52`](https://github.com/Effect-TS/effect/commit/2976e52538d9dc9ffdcbc84d4ac748cff9305971)]:
+  - @effect/platform@0.79.0
+  - effect@3.13.9
+  - @effect/platform-node-shared@0.29.0
+
 ## 0.74.1
 
 ### Patch Changes
